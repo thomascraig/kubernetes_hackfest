@@ -8,15 +8,15 @@
 # nameOverride:
 # fullnameOverride:
 
-Master:
-  Name: jenkins-master
-  Image: "jenkins/jenkins"
-  ImageTag: "lts"
-  ImagePullPolicy: "Always"
+master:
+  componentName: jenkins-master
+  image: "jenkins/jenkins"
+  imageTag: "lts"
+  imagePullPolicy: "Always"
 # ImagePullSecret: jenkins
-  Component: "jenkins-master"
-  UseSecurity: true
-  AdminUser: admin
+  componentName: "jenkins-master"
+  useSecurity: true
+  adminUser: admin
   # AdminPassword: <defaults to random>
   resources:
     requests:
@@ -129,10 +129,10 @@ Master:
     #   hosts:
     #     - jenkins.cluster.local
 
-Agent:
-  Enabled: true
-  Image: jenkins/jnlp-slave
-  ImageTag: 3.10-1
+agent:
+  enabled: true
+  image: jenkins/jnlp-slave
+  imageTag: 3.10-1
 # ImagePullSecret: jenkins
   Component: "jenkins-slave"
   Privileged: false
@@ -157,8 +157,8 @@ Agent:
   # Key Value selectors. Ex:
   # jenkins-agent: v1
 
-Persistence:
-  Enabled: true
+persistence:
+  enabled: true
   ## A manually managed Persistent Volume and Claim
   ## Requires Persistence.Enabled: true
   ## If defined, PVC must be created manually before volume will be bound
@@ -173,9 +173,9 @@ Persistence:
   ##
   # StorageClass: "-"
 
-  Annotations: {}
-  AccessMode: ReadWriteOnce
-  Size: 8Gi
+  annotations: {}
+  accessMode: ReadWriteOnce
+  size: 8Gi
   volumes:
   #  - name: nothing
   #    emptyDir: {}
@@ -184,18 +184,17 @@ Persistence:
   #    name: nothing
   #    readOnly: true
 
-NetworkPolicy:
+networkPolicy:
   # Enable creation of NetworkPolicy resources.
-  Enabled: false
+  enabled: false
   # For Kubernetes v1.4, v1.5 and v1.6, use 'extensions/v1beta1'
   # For Kubernetes v1.7, use 'networking.k8s.io/v1'
-  ApiVersion: extensions/v1beta1
+  apiVersion: extensions/v1beta1
 
 ## Install Default RBAC roles and bindings
 rbac:
-  install: true
-  serviceAccountName: default
+  create: true
+  serviceAccount.name: default
   # RBAC api version (currently either v1beta1 or v1alpha1)
   apiVersion: v1beta1
-  # Cluster role reference
-  roleRef: cluster-admin
+  
